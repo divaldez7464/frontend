@@ -9,7 +9,7 @@ function Home() {
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="#">Wishlist</a>
+                    <a className="navbar-brand" href="#">Home</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -30,7 +30,6 @@ function Home() {
                 </div>
             </nav>
 
-            {/* Main Content */}
             <div className="container text-center mt-5">
                 <h1 className="mb-4">Welcome to the Home Page!</h1>
                 <div className="d-flex justify-content-center">
