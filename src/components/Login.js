@@ -63,9 +63,13 @@ function App() {
                 </div>
             ) 
             : (
+                <div>
                 <button onClick={() => login()}>Login in with Google</button>
+                <button onClick={() => navigate('/signup')}>Sign Up</button>
+                </div>
             )}
             <button onClick={() => login()}>Login in with Google</button>
+
 
         </div>
     );
