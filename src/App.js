@@ -6,6 +6,8 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Profile from './components/Profile';
 import Wishlist from './components/Wishlist';
+import SignUp from './components/Signup';
+import Item from './components/Item';
 import React from 'react';
 
 
@@ -23,6 +25,8 @@ function App() {
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/item" element={<Item />} />
           </Routes>
         </Router>
   );
