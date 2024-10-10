@@ -1,41 +1,39 @@
-
 import React, { useState, useEffect } from 'react';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
-import { Navigate, useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from './Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Login() {
-    const [ user, setUser ] = useState([null]);
-    const [ profile, setProfile ] = useState([null]);
+    const [user, setUser] = useState(null);
+    const [profile, setProfile] = useState(null);
     const navigate = useNavigate();
 
     const login = useGoogleLogin({
-        onSuccess: (codeResponse) => {setUser(codeResponse)
-            navigate('/home');},
-        onError: (error) => console.log('Login Failed:', error)
-        
+        onSuccess: (codeResponse) => {
+            setUser(codeResponse);
+            navigate('/home');
+        },
+        onError: (error) => console.log('Login Failed:', error),
     });
 
-    useEffect(
-        () => {
-            if (user) {
-                axios
-                    .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-                        headers: {
-                            Authorization: `Bearer ${user.access_token}`,
-                            Accept: 'application/json'
-                        }
-                    })
-                    .then((res) => {
-                        setProfile(res.data);
-                    })
-                    .catch((err) => console.log(err));
-            }
-        },
-        [ user ]
-    );
+    useEffect(() => {
+        if (user) {
+            axios
+                .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                    headers: {
+                        Authorization: `Bearer ${user.access_token}`,
+                        Accept: 'application/json',
+                    },
+                })
+                .then((res) => {
+                    setProfile(res.data);
+                })
+                .catch((err) => console.log(err));
+        }
+    }, [user]);
 
-    // log out function to log the user out of google and set the profile array to null
     const logOut = () => {
         googleLogout();
         setProfile(null);
@@ -43,35 +41,28 @@ function Login() {
         navigate('/');
     };
 
-    // if(user){
-    //     return <Navigate to="/home" replace/>;
-    // }
     return (
-        <div>
-            <h2>Login</h2>
-            <br />
+        <div className="container mt-5">
+            {/* <Navbar /> */}
+            <h2 className="text-center">Login</h2>
             <br />
             {profile ? (
-                <div>
-                    {/* <img src={profile.picture} alt="user image" /> */}
-                    <h3>User Logged in</h3>
+                <div className="text-center">
+                    <h3>User Logged In</h3>
                     <p>Name: {profile.name}</p>
                     <p>Email Address: {profile.email}</p>
-                    <br />
-                    <br />
-                    <button onClick={logOut}>Log out</button>
+                    <img src={profile.picture} alt="User" className="img-fluid rounded-circle mb-3" />
+                    <button onClick={logOut} className="btn btn-danger">Log Out</button>
                 </div>
-            ) 
-            : (
-                <div>
-                <button onClick={() => login()}>Login in with Google</button>
-                <button onClick={() => navigate('/signup')}>Sign Up</button>
+            ) : (
+                <div className="text-center">
+                    <button onClick={() => login()} className="btn btn-primary mb-2">Login with Google</button>
+                    <br />
+                    <button onClick={() => navigate('/signup')} className="btn btn-secondary">Sign Up</button>
                 </div>
             )}
-            <button onClick={() => login()}>Login in with Google</button>
-
-
         </div>
     );
 }
+
 export default Login;
