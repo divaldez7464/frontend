@@ -3,14 +3,18 @@ import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import { Navigate, useNavigate, useNavigation } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Home.css';
+// import React from 'react';
+// import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
+import '../styles/Home.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Home() {
     const navigate = useNavigate();
     return (
-        <div>
-            <Navbar />
-        
+        <div className="home-container">
+            <div className="background">
+            <Navbar />        
         
             <div className="home-wrapper">
                 
@@ -44,6 +48,7 @@ function Home() {
                 </div>
             </div>
         </div> 
+
     );
 }
 
