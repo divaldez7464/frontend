@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
 import profileimage from '../Image/TestImage.jpg';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Profile() {
     return (
