@@ -1,0 +1,8 @@
+.navbar-nav {
+    flex-direction: row; /* Ensure items are in a row */
+  }
+  
+  .navbar-nav .nav-link {
+    margin: 0 15px; /* Spacing between items */
+  }
+  

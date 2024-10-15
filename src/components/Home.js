@@ -7,9 +7,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function Home() {
     const navigate = useNavigate();
     return (
+        <div>
+            <Navbar/>
         <div className="home-container">
             <div className="background">
-            <Navbar />
             <h1>Home</h1>
             <h1 className="home-container">Welcome To Your Wishlist</h1>
             <p className="lead">Begin by adding items to a list</p>
@@ -36,6 +37,7 @@ function Home() {
                 </button>
             </div>
             </div> 
+        </div>
         </div>
     );
 }
