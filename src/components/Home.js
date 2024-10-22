@@ -42,13 +42,16 @@ function Home() {
                 </div>
 
                 <div className="home-button">
+                    {/* <button className="btn btn-primary" onClick={() => navigate('/wishlist')}>
+                        View Wishlist
+                    </button> */}
                     <button className="btn btn-primary" onClick={() => navigate('/wishlist')}>
                         View Wishlist
                     </button>
                 </div>
             </div>
         </div> 
-    </div>
+</div>
     );
 }
 
