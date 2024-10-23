@@ -8,6 +8,7 @@ import Profile from './components/Profile';
 import Wishlist from './components/Wishlist';
 import SignUp from './components/Signup';
 import Item from './components/Item';
+import EditUser from './components/EditUser';
 import React from 'react';
 
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/item" element={<Item />} />
+            <Route path="/edituser" element={<EditUser/>} />
           </Routes>
         </Router>
   );

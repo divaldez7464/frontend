@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
 import profileimage from '../Image/TestImage.jpg';
+import { Navigate, useNavigate, useNavigation } from 'react-router-dom';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Profile() {
+    const navigate = useNavigate();
     return (
         <div>
             <Navbar />
@@ -19,7 +22,7 @@ function Profile() {
                     <div className="card-body text-center">
                         <h5 className="card-title">Username: FakeAccount</h5>
                         <p className="card-text">Profile description here</p>
-                       <h1><button className="btn btn-danger">Edit Profile</button></h1>
+                       <h1><button className="btn btn-danger" onClick={() => navigate('/edituser')}>Edit Profile </button></h1>
                         <button className="btn btn-danger">Delete Account</button>
                     </div>
                 </div>
