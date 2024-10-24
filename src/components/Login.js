@@ -1,70 +1,110 @@
-import React, { useState, useEffect } from 'react';
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Navbar from './Navbar';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/Login.css';
+import React, { useState } from "react";
+import axios from "axios";
 
-function Login() {
-    const [user, setUser] = useState(null);
-    const [profile, setProfile] = useState(null);
-    const navigate = useNavigate();
+const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
-    const login = useGoogleLogin({
-        onSuccess: (codeResponse) => {
-            setUser(codeResponse);
-            navigate('/home');
-        },
-        onError: (error) => console.log('Login Failed:', error),
-    });
+  const handleLogin = async (e) => {
+        e.preventDefault();
 
-    useEffect(() => {
-        if (user) {
-            axios
-                .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-                    headers: {
-                        Authorization: `Bearer ${user.access_token}`,
-                        Accept: 'application/json',
-                    },
-                })
-                .then((res) => {
-                    setProfile(res.data);
-                })
-                .catch((err) => console.log(err));
+        try {
+            const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                }),
+                credentials: 'include', // Ensures that cookies (session) are included in the request
+            });
+
+            if (response.ok) {
+                const result = await response.text(); // Get the response body (which could be a success message)
+                setMessage("Login successful!");
+                console.log(result); // Optional: Log success message
+            } else {
+                const errorMessage = await response.text();
+                setMessage("Invalid username or password.");
+                console.error("Login failed:", errorMessage); // Log error message
+            }
+        } catch (error) {
+            setMessage("Error logging in. Please try again.");
+            console.error("Login error:", error);
         }
-    }, [user]);
-
-    const logOut = () => {
-        googleLogout();
-        setProfile(null);
-        setUser(null);
-        navigate('/');
     };
 
-    return (
-        <div className="login-page">
-            <div className="login-container">
-                <h2 className="text-center">Login</h2>
-                <br />
-                {profile ? (
-                    <div className="text-center">
-                        <h3>User Logged In</h3>
-                        <p>Name: {profile.name}</p>
-                        <p>Email Address: {profile.email}</p>
-                        <img src={profile.picture} alt="User" className="img-fluid rounded-circle mb-3" />
-                        <button onClick={logOut} className="btn btn-danger">Log Out</button>
-                    </div>
-                ) : (
-                    <div className="text-center">
-                        <button onClick={() => login()} className="btn btn-primary mb-2">Login with Google</button>
-                        <br />
-                        <button onClick={() => navigate('/signup')} className="btn btn-secondary">Sign Up</button>
-                    </div>
-                )}
-            </div>
+
+  return (
+    <div style={styles.container}>
+      <h2>Login</h2>
+      <form onSubmit={handleLogin} style={styles.form}>
+        <div style={styles.inputContainer}>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            style={styles.input}
+            required
+          />
         </div>
-    );
-}
+
+        <div style={styles.inputContainer}>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={styles.input}
+            required
+          />
+        </div>
+
+        <button type="submit" style={styles.button}>
+          Login
+        </button>
+      </form>
+
+      {message && <p>{message}</p>}
+    </div>
+  );
+};
+
+// Simple inline styles
+const styles = {
+  container: {
+    width: "300px",
+    margin: "0 auto",
+    padding: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "10px",
+    textAlign: "center",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  inputContainer: {
+    marginBottom: "15px",
+  },
+  input: {
+    padding: "10px",
+    fontSize: "16px",
+    width: "100%",
+  },
+  button: {
+    padding: "10px",
+    backgroundColor: "#28a745",
+    color: "#fff",
+    border: "none",
+    cursor: "pointer",
+  },
+};
 
 export default Login;
