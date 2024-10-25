@@ -1,38 +1,84 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Navbar from './Navbar';
-import profileimage from '../Image/TestImage.jpg';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Navbar from './Navbar'
 
-function Wishlist() {
+const Wishlist = () => {
+    const [items, setItems] = useState([]);
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const item={
-        name: "Sneakers",
-        description: "Desctiption of the item.",
-        category: "Shoes",
-        price: "$30.99",
-        available: true,
-        url: "https://example.com/cool-sneakers",
-    };
+    // Fetch items from the backend
+    useEffect(() => {
+        const fetchItems = async () => {
+            try {
+                const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/items', {
+                    method: 'GET',
+                    credentials: 'include', // Ensure session/cookies are sent
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setItems(data); // Update the state with the fetched items
+                } else if (response.status === 401) {
+                    setErrorMessage('You are not authorized. Please log in.');
+                } else {
+                    setErrorMessage('Failed to fetch items. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error fetching items:', error);
+            }
+        };
+
+        fetchItems();
+    }, []); // Empty dependency array means this will run once when the component mounts
+
     return (
-        <div>
-            <Navbar />
-            <div className="wishlist-container container mt-5">
-                <h1 className="text-center mb-4">Wishlist</h1>
-                <div className="card mx-auto" style={{ width: '18rem' }}>
-                    <div className="card-body text-center">
-                        <h5 className="card-title">{item.name}</h5>
-                        <p className="card-text">{item.description}</p>
-                        <p className="card-text"><strong>Category:</strong> {item.category}</p>
-                        <p className="card-text"><strong>Price:</strong> {item.price}</p>
-                        <p className="card-text"><strong>Available:</strong> {item.available ? "Yes" : "No"}</p>
-                        <p className="card-text"><strong>url:</strong> {item.url}</p>
-                        <a href={item.url} className="btn btn-primary" target="_blank" rel="noopener noreferrer">Buy</a>
-                    </div>
-                </div>
+        <>
+        <Navbar/>
+        <div style={styles.container}>
+            <h2>My Wishlist</h2>
+            {errorMessage && <p style={styles.error}>{errorMessage}</p>}
+            <div style={styles.itemsContainer}>
+                {items.length > 0 ? (
+                    items.map((item, index) => (
+                        <div key={index} style={styles.itemBox}>
+                            <h3>{item.name}</h3>
+                            <p>{item.description}</p>
+                            <p>Price: {item.price}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p>No items found in your wishlist.</p>
+                )}
             </div>
         </div>
+        </>
     );
-}
+};
+
+// Simple styles for the Wishlist component
+const styles = {
+    container: {
+        width: '80%',
+        margin: '0 auto',
+        padding: '20px',
+        textAlign: 'center',
+    },
+    itemsContainer: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        padding: '40px'
+    },
+    itemBox: {
+        border: '1px solid #ccc',
+        borderRadius: '8px',
+        padding: '10px',
+        margin: '10px',
+        width: '30%',
+        textAlign: 'left',
+    },
+    error: {
+        color: 'red',
+    },
+};
 
 export default Wishlist;
