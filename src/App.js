@@ -10,6 +10,8 @@ import SignUp from './components/Signup';
 import Item from './components/Item';
 import EditUser from './components/EditUser';
 import React from 'react';
+import CurrentUser from './components/test';
+
 
 
 
@@ -19,7 +21,7 @@ function App() {
 //     .then(response=>response.text())
 //     .then(result=>console.log(result));
 // },[]);
-  return (
+  return (< CurrentUser>
         <Router>
           <Routes>
             <Route path="/" element={<Login />} />
@@ -29,9 +31,11 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/item" element={<Item />} />
             <Route path="/edituser" element={<EditUser/>} />
+          
           </Routes>
         </Router>
-  );
+
+</CurrentUser>  );
 }
 
 export default App;

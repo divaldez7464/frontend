@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from 'react';
+import { UserContext } from './test';
+
+// import Cookies from "js-cookie";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+
+    const {setUsernameGlobal, setUserIdGlobal } = useContext(UserContext);
+
+
     const navigate = useNavigate();
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -13,6 +22,7 @@ const Login = () => {
         try {
             const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/users/login', {
                 method: 'POST',
+                credentials: 'include', // Include session cookies
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -20,14 +30,55 @@ const Login = () => {
                     username: username,
                     password: password,
                 }),
-                credentials: 'include', // Include session cookies
+                
             });
+            
+
 
             if (response.ok) {
-                const result = await response.text(); // Get the success message
-                setMessage("Login successful!");
-                navigate("/wishlist");
-                console.log(result);
+                // const data = await response.json();
+
+                // const data = await response.json();
+
+
+                // const result = await response.text(); // Get the success message
+                // setMessage("Login successful!");
+
+
+
+                // localStorage.setItem("userData", JSON.stringify(data));
+
+
+                const contentType = response.headers.get("content-type");
+
+                if (contentType && contentType.includes("application/json")) {
+                    // Parse as JSON and store in localStorage
+                    const data = await response.json();
+                    console.log("Login Response:", data); 
+                    localStorage.setItem("userData", JSON.stringify(data));
+                    
+                    // localStorage.setItem("userData", JSON.stringify({
+                    //     username: data.username,
+                    //     user_id: data.user_id
+                    // }));
+                    setMessage("Login successful! with json");
+                     navigate("/wishlist");
+                } else {
+                    // Parse as plain text
+                    const result = await response.text();
+                    console.log(result);
+                    setMessage("Login successful! with plain text");
+                     navigate("/signup");
+                }
+    
+                // navigate("/wishlist");
+                
+                // setUsernameGlobal(data.username);
+                // setUserIdGlobal(data.user_id);
+                // console.log(setUserIdGlobal);
+                // console.log(setUsernameGlobal);
+                // navigate("/wishlist");
+                // console.log(result);
             } else {
                 const errorMessage = await response.text();
                 setMessage("Invalid username or password.");

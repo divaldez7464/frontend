@@ -26,6 +26,7 @@ function Signup() {
             // });
             const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/users/newuser',{
                     method: 'POST',
+                    credentials: 'include', // Include session cookies
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -34,6 +35,7 @@ function Signup() {
                         password: password,
 
                     }),
+                    
 
             })
             const data = await response.json();

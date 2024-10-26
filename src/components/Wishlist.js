@@ -1,22 +1,69 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar'
 
+
+
+import { Navigate, useNavigate, useNavigation } from 'react-router-dom';
+
+
+
 const Wishlist = () => {
     const [items, setItems] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
 
-    // Fetch items from the backend
+
+    const navigate = useNavigate();
+   
+        
+   
+
+    
     useEffect(() => {
+        // const username = localStorage.getItem("username"); 
+        // console.log("Username in Wishlist:", username); 
+        const storedUserData = localStorage.getItem("userData");
+        console.log("UserData in localStorage:", storedUserData);
+        // const userData = localStorage.getItem("userData");
+        // console.log('User data:', userData);
+        // if (!userData) {
+            
+        //     setErrorMessage('You are not authorized. Please log in.');
+        //     console.log("NO U R NOT")
+        //     // navigate('/Login'); // Redirect to login if no user data is found
+        //     // return;
+        // }
+
+
         const fetchItems = async () => {
+            const userData = localStorage.getItem("userData");
+            if (userData) {
+                const parsedData = JSON.parse(userData);
+                console.log("Logged in user:", parsedData.username); 
+            } else {
+                console.log("No user is logged in");
+            }
             try {
-                const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/items', {
-                    method: 'GET',
-                    credentials: 'include', // Ensure session/cookies are sent
-                });
+            //     const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/items', {
+            //         method: 'GET',
+            //         credentials: 'include', // Ensure session/cookies are sent
+            //     });
+            const parsedData = JSON.parse(userData);
+            const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/items', {
+                
+                method: 'GET',
+                credentials: 'include', 
+                headers: {
+                    'Authorization': `Bearer ${parsedData.username}`
+                },
+            });
+
+            console.log('Response status:', response.status); 
+            const data = await response.json();
+            console.log(data);
 
                 if (response.ok) {
-                    const data = await response.json();
-                    setItems(data); // Update the state with the fetched items
+                    // const data = await response.json();
+                    setItems(data); 
                 } else if (response.status === 401) {
                     setErrorMessage('You are not authorized. Please log in.');
                 } else {
@@ -28,7 +75,7 @@ const Wishlist = () => {
         };
 
         fetchItems();
-    }, []); // Empty dependency array means this will run once when the component mounts
+    }, []); 
 
     return (
         <>
