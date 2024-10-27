@@ -76,7 +76,7 @@ const Wishlist = () => {
                         <div key={item.id} style={styles.itemBox}>
                             <h3>{item.itemName}</h3>
                             <p>{item.description}</p>
-                            <p>Price: {item.price}</p>
+                            <p>Price: ${item.price}</p>
                             {/* Delete button */}
                             <button
                                 onClick={() => handleDelete(item.id)}

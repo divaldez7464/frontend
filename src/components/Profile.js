@@ -1,46 +1,58 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Navbar from './Navbar';
 import profileimage from '../Image/TestImage.jpg';
-import { Navigate, useNavigate, useNavigation } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-function DeleteUser() {
-    const navigate = useNavigate();
-
-}
-
 
 function Profile() {
     const [user, setUser] = useState(null);
+    const [newUsername, setNewUsername] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUser = async () => {
-          try {
-            const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/users/currentuser', {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            });
-    
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
+            const storedUserData = localStorage.getItem("userData");
+            if (!storedUserData) {
+                setErrorMessage('No user data found. Please log in.');
+                navigate('/Login');
+                return;
             }
-    
-            const data = await response.json();
-            setUser(data);
-          } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
-          }
+
+            const parsedData = JSON.parse(storedUserData);
+            try {
+                const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/users/currentuser', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Authorization': `Bearer ${parsedData.username}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data.');
+                }
+
+                const data = await response.json();
+                setUser(data);
+                setNewUsername(data.username);
+            } catch (error) {
+                console.error('Error fetching user:', error);
+                setErrorMessage('Failed to load user data.');
+            }
         };
-           fetchUser();
-  }, []);
 
+        fetchUser();
+    }, [navigate]);
 
+    const handleUpdateProfile = async () => {
+        // Your update profile logic here...
+    };
 
+    const handleDeleteAccount = async () => {
+        // Your delete account logic here...
+    };
 
     return (
         <div>
@@ -54,10 +66,26 @@ function Profile() {
                         alt="Profile" 
                     />
                     <div className="card-body text-center">
-                        <h5 className="card-title">Username: FakeAccount</h5>
-                        <p className="card-text">Profile description here</p>
-                       <h1><button className="btn btn-danger" onClick={() => navigate('/edituser')}>Edit Profile </button></h1>
-                        <button className="btn btn-danger">Delete Account</button>
+                        <h5 className="card-title">
+                            {user ? user.username : <span className="text-muted">Loading user data...</span>}
+                        </h5>
+                        <input
+                            type="text"
+                            value={newUsername}
+                            onChange={(e) => setNewUsername(e.target.value)}
+                            placeholder="New Username"
+                            className="form-control mb-2"
+                        />
+                        <input
+                            type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            placeholder="New Password"
+                            className="form-control mb-2"
+                        />
+                        <button className="btn btn-primary" onClick={handleUpdateProfile}>Update Profile</button>
+                        <button className="btn btn-danger" onClick={handleDeleteAccount} style={{ marginLeft: '10px' }}>Delete Account</button>
+                        {errorMessage && <p className="text-danger mt-2">{errorMessage}</p>}
                     </div>
                 </div>
             </div>
