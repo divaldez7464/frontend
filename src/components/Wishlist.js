@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
+import '../styles/Item.css';
 
 const Wishlist = () => {
     const [items, setItems] = useState([]);
@@ -118,7 +119,7 @@ const Wishlist = () => {
     };
 
     return (
-        <>
+        <div className="background">
         <Navbar/>
         <div style={styles.container}>
             <h2>My Wishlist</h2>
@@ -202,7 +203,7 @@ const Wishlist = () => {
                 </div>
             </div>
         )}
-        </>
+        </div>
     );
 };
 
@@ -226,6 +227,7 @@ const styles = {
         margin: '10px',
         width: '30%',
         textAlign: 'left',
+        backgroundColor: 'white',
     },
     error: {
         color: 'red',
