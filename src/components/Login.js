@@ -18,7 +18,6 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
         try {
             const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/users/login', {
                 method: 'POST',
@@ -33,6 +32,7 @@ const Login = () => {
                 
             });
             
+
 
 
             if (response.ok) {
@@ -118,10 +118,16 @@ const Login = () => {
                     />
                 </div>
 
-                <button type="submit" style={styles.button}>
-                    Login
-                </button>
+            <div style={styles.buttonContainer}>
+                
+            
+                <button type="submit" style={styles.loginButton}>Login</button>
+
+                <button onClick={() => navigate("/signup")} style={styles.signupButton}> Sign up</button>
+            </div>
             </form>
+
+
 
             {message && <p>{message}</p>}
         </div>
@@ -150,7 +156,20 @@ const styles = {
         fontSize: "16px",
         width: "100%",
     },
-    button: {
+    buttonContainer: {
+        display: "flex",
+        justifyContent: "space-between",
+        marginTop: "10px",
+    },
+    loginButton: {
+        padding: "10px",
+        backgroundColor: "#28a745",
+        color: "#fff",
+        border: "none",
+        cursor: "pointer",
+    },
+
+    signupButton: {
         padding: "10px",
         backgroundColor: "#28a745",
         color: "#fff",
