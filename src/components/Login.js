@@ -10,7 +10,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
 
-    const {setUsernameGlobal, setUserIdGlobal } = useContext(UserContext);
+    // const {setUsernameGlobal, setUserIdGlobal } = useContext(UserContext);
 
 
     const navigate = useNavigate();
@@ -52,7 +52,7 @@ const Login = () => {
                 const contentType = response.headers.get("content-type");
 
                 if (contentType && contentType.includes("application/json")) {
-                    // Parse as JSON and store in localStorage
+                    
                     const data = await response.json();
                     console.log("Login Response:", data); 
                     localStorage.setItem("userData", JSON.stringify(data));

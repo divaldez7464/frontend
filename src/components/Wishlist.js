@@ -87,7 +87,7 @@ const Wishlist = () => {
                 {items.length > 0 ? (
                     items.map((item, index) => (
                         <div key={index} style={styles.itemBox}>
-                            <h3>{item.name}</h3>
+                            <h3>{item.itemName}</h3>
                             <p>{item.description}</p>
                             <p>Price: {item.price}</p>
                         </div>

@@ -19,9 +19,8 @@ function Profile() {
     useEffect(() => {
         const fetchUser = async () => {
           try {
-            const response = await fetch('https://your-backend-url/api/users/currentuser', {
+            const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/users/currentuser', {
               method: 'GET',
-              credentials: 'include',
               headers: {
                 'Content-Type': 'application/json',
               },
@@ -37,11 +36,9 @@ function Profile() {
             console.error('There was a problem with the fetch operation:', error);
           }
         };
-        fetchUser();
-    }, []);
-    if (!user) {
-        return <div>Loading...</div>;
-      }
+           fetchUser();
+  }, []);
+
 
 
 
@@ -57,7 +54,7 @@ function Profile() {
                         alt="Profile" 
                     />
                     <div className="card-body text-center">
-                        <h5 className="card-title">Username: {user.username}</h5>
+                        <h5 className="card-title">Username: FakeAccount</h5>
                         <p className="card-text">Profile description here</p>
                        <h1><button className="btn btn-danger" onClick={() => navigate('/edituser')}>Edit Profile </button></h1>
                         <button className="btn btn-danger">Delete Account</button>
