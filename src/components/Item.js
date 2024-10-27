@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/Item.css';
 
 function Item({ userId }) {
     const navigate = useNavigate();
@@ -37,22 +38,6 @@ function Item({ userId }) {
                 method: 'POST',
                 credentials: 'include', // Ensure credentials are sent
             });
-         
-
-            // const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/items', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     credentials: 'include',
-            //     body: JSON.stringify({
-            //         // userId,
-            //     item_name: itemName.trim(),
-            //     url: itemUrl.trim(),
-            //     description: description.trim(),
-            //     price: price ? parseFloat(price) : null
-            //     }),
-            // })
 
             const data = await response.json();
             console.log(data);
@@ -76,58 +61,62 @@ function Item({ userId }) {
     };
 
     return (
-        <div>
+        <div className="background">
             <Navbar />
-            <div className="Item-container">
-                <h1>Add Item</h1>
-                <div className="mb-3">
-                    {/* sets item name below */}
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        placeholder="Item Name" 
-                        value={itemName} 
-                        onChange={(e) => setItemName(e.target.value)} 
-                    />
+            
+        <div className="container mt-5">
+            <h1 className="text-center mb-4">Add Item</h1>
+            <div className="card">
+                <div className="card-body">
+                    <form>
+                        <div className="mb-3">
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                placeholder="Item Name" 
+                                value={itemName} 
+                                onChange={(e) => setItemName(e.target.value)} 
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <input 
+                                type="url" 
+                                className="form-control" 
+                                placeholder="Item URL" 
+                                value={itemUrl} 
+                                onChange={(e) => setItemUrl(e.target.value)} 
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                placeholder="Description" 
+                                value={description} 
+                                onChange={(e) => setDescription(e.target.value)} 
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <input 
+                                type="number" 
+                                className="form-control" 
+                                placeholder="Price" 
+                                value={price} 
+                                onChange={(e) => setPrice(e.target.value)} 
+                            />
+                        </div>
+                        <button 
+                            type="button"
+                            className="btn btn-primary w-100" 
+                            onClick={handleAddItem}
+                        >
+                            Add Item
+                        </button>
+                    </form>
                 </div>
-                {/* sets url below */}
-                <div className="mb-3">
-                    <input 
-                        type="url" 
-                        className="form-control" 
-                        placeholder="Item URL" 
-                        value={itemUrl} 
-                        onChange={(e) => setItemUrl(e.target.value)} 
-                    />
-                </div>
-                {/* sets description below */}
-                <div className="mb-3">
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        placeholder="Description" 
-                        value={description} 
-                        onChange={(e) => setDescription(e.target.value)} 
-                    />
-                </div>
-                {/* Sets price below */}
-                <div className="mb-3">
-                    <input 
-                        type="number" 
-                        className="form-control" 
-                        placeholder="Price" 
-                        value={price} 
-                        onChange={(e) => setPrice(e.target.value)} 
-                    />
-                </div>
-                <button 
-                    className="btn btn-primary" 
-                    onClick={handleAddItem}
-                >
-                    Add Item
-                </button>
             </div>
         </div>
+    </div>
     );
 }
 
