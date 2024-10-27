@@ -10,7 +10,7 @@ import SignUp from './components/Signup';
 import Item from './components/Item';
 import EditUser from './components/EditUser';
 import React from 'react';
-import CurrentUser from './components/test';
+// import CurrentUser from './components/test';
 
 
 
@@ -21,7 +21,8 @@ function App() {
 //     .then(response=>response.text())
 //     .then(result=>console.log(result));
 // },[]);
-  return (< CurrentUser>
+  return (
+  // < CurrentUser>
         <Router>
           <Routes>
             <Route path="/" element={<Login />} />
@@ -34,8 +35,8 @@ function App() {
           
           </Routes>
         </Router>
-
-</CurrentUser>  );
+// </CurrentUser> 
+ );
 }
 
 export default App;

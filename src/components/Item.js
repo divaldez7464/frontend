@@ -13,20 +13,46 @@ function Item({ userId }) {
     const [price, setPrice] = useState('');
 
     const handleAddItem = async () => {
+
+        const storedUserData = localStorage.getItem("userData");
+        console.log("UserData in localStorage:", storedUserData);
         try {
-            const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/items', {
+
+            console.log(JSON.stringify({
+                item_name: itemName.trim(),
+                url: itemUrl.trim(),
+                description: description.trim(),
+                price: price ? parseFloat(price) : null,
+            }));
+
+
+            const params = new URLSearchParams({
+                item_name: itemName.trim(),
+                url: itemUrl.trim(),
+                description: description.trim(),
+                price: price ? parseFloat(price) : null,
+            });
+         
+            const response = await fetch(`https://project02-3bd6df9baeaf.herokuapp.com/api/items?${params.toString()}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    userId,
-                    itemName,
-                    url: itemUrl,
-                    description,
-                    price: price ? parseFloat(price) : undefined,
-                }),
-            })
+                credentials: 'include', // Ensure credentials are sent
+            });
+         
+
+            // const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/items', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     credentials: 'include',
+            //     body: JSON.stringify({
+            //         // userId,
+            //     item_name: itemName.trim(),
+            //     url: itemUrl.trim(),
+            //     description: description.trim(),
+            //     price: price ? parseFloat(price) : null
+            //     }),
+            // })
 
             const data = await response.json();
             console.log(data);
