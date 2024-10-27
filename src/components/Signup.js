@@ -10,6 +10,11 @@ function Signup() {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const handleSignup = async () => {
+        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+        if (!passwordPattern.test(password)) {
+            alert("Password must be at least 6 characters long and include at least one letter, one number, and one special character.");
+            return;
+        }
         // Ensure the password and confirmPassword match
         if (password !== confirmPassword) {
             alert("Passwords don't match");
