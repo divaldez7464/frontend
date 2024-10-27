@@ -26,7 +26,7 @@ function Home() {
                     <p className="lead">Begin by adding items to a list</p>
                 </div>
 
-                <div className="row">
+                {/* <div className="row">
                     <div className="col">
                         <h4>Shoes</h4>
                         <p>Example description</p>
@@ -39,7 +39,7 @@ function Home() {
                         <h4>Sweaters</h4>
                         <p>Example description</p>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="home-button">
                     {/* <button className="btn btn-primary" onClick={() => navigate('/wishlist')}>

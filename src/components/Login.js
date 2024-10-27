@@ -26,7 +26,7 @@ const Login = () => {
             if (response.ok) {
                 const result = await response.text(); // Get the success message
                 setMessage("Login successful!");
-                navigate("/wishlist");
+                navigate("/home");
                 console.log(result);
             } else {
                 const errorMessage = await response.text();
@@ -40,51 +40,66 @@ const Login = () => {
     };
 
     return (
-        <div style={styles.container}>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin} style={styles.form}>
-                <div style={styles.inputContainer}>
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        type="text"
-                        id="username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        style={styles.input}
-                        required
-                    />
-                </div>
+        <div style={styles.page}>
+            <div style={styles.container}>
+                <h2>Login</h2>
+                <form onSubmit={handleLogin} style={styles.form}>
+                    <div style={styles.inputContainer}>
+                        <label htmlFor="username">Username:</label>
+                        <input
+                            type="text"
+                            id="username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            style={styles.input}
+                            required
+                        />
+                    </div>
 
-                <div style={styles.inputContainer}>
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        style={styles.input}
-                        required
-                    />
-                </div>
+                    <div style={styles.inputContainer}>
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            style={styles.input}
+                            required
+                        />
+                    </div>
 
-            <div style={styles.buttonContainer}>
-                
-            
-                <button type="submit" style={styles.loginButton}>Login</button>
-
-                <button onClick={() => navigate("/signup")} style={styles.signupButton}> Sign up</button>
-            </div>
-            </form>
+                    <div style={styles.buttonContainer}>
+                        <button type="submit" style={styles.loginButton}>
+                            Login
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => navigate("/signup")}
+                            style={styles.signupButton}
+                        >
+                            Sign up
+                        </button>
+                    </div>
+                </form>
 
 
 
             {message && <p>{message}</p>}
+            </div>
         </div>
     );
 };
 
 // Simple inline styles
 const styles = {
+    
+    page: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#f0f0f0",
+    },
     container: {
         width: "300px",
         margin: "0 auto",
