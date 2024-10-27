@@ -91,46 +91,48 @@ const Login = () => {
     };
 
     return (
-    <div style={styles.page}>
-        <div style={styles.container}>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin} style={styles.form}>
-                <div style={styles.inputContainer}>
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        type="text"
-                        id="username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        style={styles.input}
-                        required
-                    />
-                </div>
+    <div style={styles.background}>
+        <div style={styles.page}>
+            <div style={styles.container}>
+                <h2>Login</h2>
+                <form onSubmit={handleLogin} style={styles.form}>
+                    <div style={styles.inputContainer}>
+                        <label htmlFor="username">Username:</label>
+                        <input
+                            type="text"
+                            id="username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            style={styles.input}
+                            required
+                        />
+                    </div>
 
-                <div style={styles.inputContainer}>
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        style={styles.input}
-                        required
-                    />
-                </div>
+                    <div style={styles.inputContainer}>
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            style={styles.input}
+                            required
+                        />
+                    </div>
 
-            <div style={styles.buttonContainer}>
+                <div style={styles.buttonContainer}>
+                    
                 
-            
-                <button type="submit" style={styles.loginButton}>Login</button>
+                    <button type="submit" style={styles.loginButton}>Login</button>
 
-                <button onClick={() => navigate("/signup")} style={styles.signupButton}> Sign up</button>
+                    <button onClick={() => navigate("/signup")} style={styles.signupButton}> Sign up</button>
+                </div>
+                </form>
+
+
+
+                {message && <p>{message}</p>}
             </div>
-            </form>
-
-
-
-            {message && <p>{message}</p>}
         </div>
     </div>
     );
@@ -152,6 +154,15 @@ const styles = {
         border: "1px solid #ccc",
         borderRadius: "10px",
         textAlign: "center",
+    },
+    background: {
+        height: "100vh",
+        backgroundImage: `url('/src/Image/Blue Background.jpg')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
     },
     form: {
         display: "flex",

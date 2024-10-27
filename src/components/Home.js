@@ -7,6 +7,7 @@ import '../styles/Home.css';
 // import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import '../styles/Home.css';
+import logo from '../Image/logo-png.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Home() {
@@ -19,13 +20,17 @@ function Home() {
             <div className="home-wrapper">
                 
                 <div className="background"></div> 
+
+                <div className="logo-container">
+                <img src={logo} alt="Logo" className="logo" />
+                </div>
             
 
                 <div className="home-style">
                     <h1>Welcome to the Wishlist Website</h1>
                     <p className="lead">Begin by adding items to a list</p>
                 </div>
-
+{/* 
                 <div className="row">
                     <div className="col">
                         <h4>Shoes</h4>
@@ -39,7 +44,7 @@ function Home() {
                         <h4>Sweaters</h4>
                         <p>Example description</p>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="home-button">
                     {/* <button className="btn btn-primary" onClick={() => navigate('/wishlist')}>
