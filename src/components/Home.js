@@ -7,7 +7,7 @@ import '../styles/Home.css';
 // import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import '../styles/Home.css';
-import logo from '../Image/logo-png.png';
+import logo from '../Image/logo-transparent-png.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Home() {
