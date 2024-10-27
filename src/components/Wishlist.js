@@ -1,39 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from './Navbar'
-
-
-
-import { Navigate, useNavigate, useNavigation } from 'react-router-dom';
-
-
+import Navbar from './Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const Wishlist = () => {
     const [items, setItems] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
-
-
     const navigate = useNavigate();
-   
-        
-   
 
-    
     useEffect(() => {
-        // const username = localStorage.getItem("username"); 
-        // console.log("Username in Wishlist:", username); 
-        const storedUserData = localStorage.getItem("userData");
-        console.log("UserData in localStorage:", storedUserData);
-        // const userData = localStorage.getItem("userData");
-        // console.log('User data:', userData);
-        // if (!userData) {
-            
-        //     setErrorMessage('You are not authorized. Please log in.');
-        //     console.log("NO U R NOT")
-        //     // navigate('/Login'); // Redirect to login if no user data is found
-        //     // return;
-        // }
-
-
         const fetchItems = async () => {
             const userData = localStorage.getItem("userData");
             if (userData) {
@@ -43,26 +17,20 @@ const Wishlist = () => {
                 console.log("No user is logged in");
             }
             try {
-            //     const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/items', {
-            //         method: 'GET',
-            //         credentials: 'include', // Ensure session/cookies are sent
-            //     });
-            const parsedData = JSON.parse(userData);
-            const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/items', {
-                
-                method: 'GET',
-                credentials: 'include', 
-                headers: {
-                    'Authorization': `Bearer ${parsedData.username}`
-                },
-            });
+                const parsedData = JSON.parse(userData);
+                const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/items', {
+                    method: 'GET',
+                    credentials: 'include', 
+                    headers: {
+                        'Authorization': `Bearer ${parsedData.username}`
+                    },
+                });
 
-            console.log('Response status:', response.status); 
-            const data = await response.json();
-            console.log(data);
+                console.log('Response status:', response.status); 
+                const data = await response.json();
+                console.log(data);
 
                 if (response.ok) {
-                    // const data = await response.json();
                     setItems(data); 
                 } else if (response.status === 401) {
                     setErrorMessage('You are not authorized. Please log in.');
@@ -75,7 +43,26 @@ const Wishlist = () => {
         };
 
         fetchItems();
-    }, []); 
+    }, []);
+
+    // Delete item handler
+    const handleDelete = async (itemId) => {
+        try {
+            const response = await fetch(`https://project02-3bd6df9baeaf.herokuapp.com/api/items?item_name=${itemId}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            });
+
+            if (response.ok) {
+                setItems(prevItems => prevItems.filter(item => item.id !== itemId));
+                console.log("Item deleted successfully.");
+            } else {
+                console.error("Failed to delete item.");
+            }
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
+    };
 
     return (
         <>
@@ -85,11 +72,18 @@ const Wishlist = () => {
             {errorMessage && <p style={styles.error}>{errorMessage}</p>}
             <div style={styles.itemsContainer}>
                 {items.length > 0 ? (
-                    items.map((item, index) => (
-                        <div key={index} style={styles.itemBox}>
+                    items.map((item) => (
+                        <div key={item.id} style={styles.itemBox}>
                             <h3>{item.itemName}</h3>
                             <p>{item.description}</p>
                             <p>Price: {item.price}</p>
+                            {/* Delete button */}
+                            <button
+                                onClick={() => handleDelete(item.id)}
+                                style={styles.deleteButton}
+                            >
+                                Delete
+                            </button>
                         </div>
                     ))
                 ) : (
@@ -101,7 +95,6 @@ const Wishlist = () => {
     );
 };
 
-// Simple styles for the Wishlist component
 const styles = {
     container: {
         width: '80%',
@@ -113,7 +106,7 @@ const styles = {
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
-        padding: '40px'
+        padding: '40px',
     },
     itemBox: {
         border: '1px solid #ccc',
@@ -125,6 +118,14 @@ const styles = {
     },
     error: {
         color: 'red',
+    },
+    deleteButton: {
+        backgroundColor: '#ff4d4d',
+        color: '#fff',
+        padding: '5px 10px',
+        border: 'none',
+        borderRadius: '5px',
+        cursor: 'pointer',
     },
 };
 
