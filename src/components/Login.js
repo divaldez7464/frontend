@@ -62,7 +62,7 @@ const Login = () => {
                     //     user_id: data.user_id
                     // }));
                     setMessage("Login successful! with json");
-                     navigate("/wishlist");
+                     navigate("/home");
                 } else {
                     // Parse as plain text
                     const result = await response.text();
@@ -91,6 +91,7 @@ const Login = () => {
     };
 
     return (
+    <div style={styles.page}>
         <div style={styles.container}>
             <h2>Login</h2>
             <form onSubmit={handleLogin} style={styles.form}>
@@ -131,11 +132,19 @@ const Login = () => {
 
             {message && <p>{message}</p>}
         </div>
+    </div>
     );
 };
 
 // Simple inline styles
 const styles = {
+    page: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#f0f0f0",
+    },
     container: {
         width: "300px",
         margin: "0 auto",
