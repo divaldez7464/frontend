@@ -47,7 +47,7 @@ function Signup() {
             console.log(data);
            
             if (response.status === 201) {
-                navigate('/home');
+                navigate('/');
             }
         } catch (error) {
             
