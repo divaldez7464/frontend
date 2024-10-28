@@ -11,7 +11,15 @@ const EditUser = () => {
     // Fetch the current user data when the component loads
     useEffect(() => {
         const fetchUserData = async () => {
+
             try {
+                const userData = localStorage.getItem("userData");
+                const parsedData = JSON.parse(userData);
+                console.log("Logged in user:", parsedData.user_id); 
+
+
+
+                
                 const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/users/current', {
                     method: 'GET',
                     credentials: 'include', // Send session cookies
@@ -35,7 +43,8 @@ const EditUser = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://project02-3bd6df9baeaf.herokuapp.com/api/users/update', {
+            const userId = JSON.parse(localStorage.getItem("userData")).user_id;
+            const response = await fetch(`https://project02-3bd6df9baeaf.herokuapp.com/api/users/update/${userId}`, {
                 method: 'PUT', // Use PUT or PATCH as configured on the backend
                 headers: {
                     'Content-Type': 'application/json',
