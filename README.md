@@ -1,7 +1,7 @@
-#Frontend
+# Frontend
 This frontend of the project is using react
 
-#Backend
+# Backend
 The backend of the project is using Springboot and docker
 
 # Getting Started with Create React App
