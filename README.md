@@ -1,3 +1,9 @@
+#Frontend
+This frontend of the project is using react
+
+#Backend
+The backend of the project is using Springboot and docker
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -5,6 +11,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+installs required files to run the program with command npm start.
 
 ### `npm start`
 
