@@ -8,7 +8,11 @@ const Profile = () => {
     const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
-
+    // const userData = localStorage.getItem("userData");
+    // console.log(userData);
+    // const parsedData = JSON.parse(userData);
+    // const username = parsedData.username;
+   
     useEffect(() => {
         const fetchUser = async () => {
             const userData = localStorage.getItem("userData");
@@ -56,14 +60,16 @@ const handleDeleteAccount = async () => {
       if (userData) {
           const parsedData = JSON.parse(userData);
           const username = parsedData.username;
+         
 
+          console.log("username:" + username);
           try {
               // Send DELETE request with username as a query parameter
               const response = await fetch(`https://project02-3bd6df9baeaf.herokuapp.com/api/users/logout?username=${username}`, {
                   method: 'DELETE',
                   credentials: 'include', // Include credentials for session
               });
-
+            
               // Check if the response is OK
               if (response.ok) {
                   localStorage.removeItem("userData"); // Remove user data from local storage
