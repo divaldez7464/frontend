@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import profileimage from '../Image/TestImage.jpg';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/Item.css';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -35,7 +36,7 @@ const Profile = () => {
                     } else if (response.status === 401) {
                         setErrorMessage('You are not authorized. Please log in.');
                     } else {
-                        setErrorMessage('Failed to fetch user data. Please try again.');
+                        // setErrorMessage('Failed to fetch user data. Please try again.');
                     }
                 } catch (error) {
                     console.error('Error fetching user data:', error);
@@ -93,7 +94,7 @@ const handleDeleteAccount = async () => {
 
 
     return (
-        <div>
+        <div className="background">
             <Navbar />
             <div className="container mt-5">
                 <h1 className="text-center mb-4">User Profile</h1>
@@ -105,7 +106,7 @@ const handleDeleteAccount = async () => {
                         alt="Profile" 
                     />
                     <div className="card-body text-center">
-                        <h5 className="card-title">Username: {user ? user.username : 'Loading...'}</h5>
+                        {/* <h5 className="card-title">Username: {user ? user.username : 'Loading...'}</h5> */}
                         <h1>
                             <button className="btn btn-danger" onClick={() => navigate('/edituser')}>Edit Profile</button>
                         </h1>
